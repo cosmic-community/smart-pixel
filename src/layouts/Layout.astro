@@ -44,7 +44,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   
   <!-- Console capture script for dashboard debugging -->
-  <script src="/dashboard-console-capture.js"></script>
+  <script src="/dashboard-console-capture.js" is:inline></script>
 </head>
 <body>
   <slot />
