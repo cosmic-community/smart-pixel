@@ -1,0 +1,91 @@
+---
+// src/components/Footer.astro
+import { Mail, Phone, Linkedin, Twitter, Github } from 'lucide-astro';
+---
+
+<footer class="bg-gray-900 text-white py-16">
+  <div class="container mx-auto px-6">
+    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+      <!-- Company Info -->
+      <div class="lg:col-span-2">
+        <div class="flex items-center space-x-2 mb-4">
+          <div class="w-8 h-8 bg-gradient-to-br from-primary-500 to-primary-700 rounded-lg flex items-center justify-center">
+            <span class="text-white font-bold text-sm">SP</span>
+          </div>
+          <span class="text-xl font-bold">Smart Pixel</span>
+        </div>
+        <p class="text-gray-400 mb-6 max-w-md">
+          We transform businesses through exceptional design, development, and digital marketing solutions. 
+          Let us help you build a stronger digital presence.
+        </p>
+        
+        <!-- Contact Info -->
+        <div class="space-y-2">
+          <div class="flex items-center gap-3">
+            <Mail size={16} class="text-primary-400" />
+            <span class="text-gray-400">hello@smartpixel.com</span>
+          </div>
+          <div class="flex items-center gap-3">
+            <Phone size={16} class="text-primary-400" />
+            <span class="text-gray-400">+1 (555) 123-4567</span>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Quick Links -->
+      <div>
+        <h3 class="text-lg font-semibold mb-4">Quick Links</h3>
+        <ul class="space-y-2">
+          <li><a href="#services" class="text-gray-400 hover:text-white transition-colors">Services</a></li>
+          <li><a href="#team" class="text-gray-400 hover:text-white transition-colors">Team</a></li>
+          <li><a href="#case-studies" class="text-gray-400 hover:text-white transition-colors">Case Studies</a></li>
+          <li><a href="#testimonials" class="text-gray-400 hover:text-white transition-colors">Testimonials</a></li>
+          <li><a href="#contact" class="text-gray-400 hover:text-white transition-colors">Contact</a></li>
+        </ul>
+      </div>
+      
+      <!-- Services -->
+      <div>
+        <h3 class="text-lg font-semibold mb-4">Services</h3>
+        <ul class="space-y-2">
+          <li><span class="text-gray-400">Web Development</span></li>
+          <li><span class="text-gray-400">UI/UX Design</span></li>
+          <li><span class="text-gray-400">Digital Marketing</span></li>
+          <li><span class="text-gray-400">Consulting</span></li>
+        </ul>
+      </div>
+    </div>
+    
+    <!-- Bottom Bar -->
+    <div class="border-t border-gray-800 pt-8">
+      <div class="flex flex-col md:flex-row justify-between items-center">
+        <!-- Copyright -->
+        <p class="text-gray-400 text-sm mb-4 md:mb-0">
+          © 2024 Smart Pixel. All rights reserved. Built with Cosmic.
+        </p>
+        
+        <!-- Social Links -->
+        <div class="flex space-x-4">
+          <a 
+            href="#" 
+            class="w-8 h-8 bg-gray-800 hover:bg-primary-600 rounded-lg flex items-center justify-center transition-colors"
+          >
+            <Twitter size={16} />
+          </a>
+          <a 
+            href="#" 
+            class="w-8 h-8 bg-gray-800 hover:bg-primary-600 rounded-lg flex items-center justify-center transition-colors"
+          >
+            <Linkedin size={16} />
+          </a>
+          <a 
+            href="#" 
+            class="w-8 h-8 bg-gray-800 hover:bg-primary-600 rounded-lg flex items-center justify-center transition-colors"
+          >
+            <Github size={16} />
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>

@@ -1,0 +1,105 @@
+---
+// src/components/TestimonialsSection.astro
+import { cosmic } from '../lib/cosmic';
+import type { Testimonial } from '../types';
+import { Star, Quote } from 'lucide-astro';
+
+let testimonials: Testimonial[] = [];
+
+try {
+  const response = await cosmic.objects
+    .find({ type: 'testimonials' })
+    .props(['id', 'title', 'slug', 'metadata'])
+    .depth(1);
+  testimonials = response.objects as Testimonial[];
+} catch (error) {
+  console.error('Error fetching testimonials:', error);
+}
+
+// Function to render star rating
+const renderStars = (rating: string) => {
+  const numStars = parseInt(rating);
+  return Array.from({ length: 5 }, (_, i) => i < numStars);
+};
+---
+
+<section id="testimonials" class="py-20 bg-gray-50">
+  <div class="container mx-auto px-6">
+    <!-- Section Header -->
+    <div class="text-center mb-16">
+      <h2 class="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
+        What Our Clients Say
+      </h2>
+      <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+        Don't just take our word for it. Here's what our satisfied clients have to say about working with us.
+      </p>
+    </div>
+    
+    <!-- Testimonials Grid -->
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {testimonials.map((testimonial) => (
+        <div class="bg-white rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 p-8 relative">
+          <!-- Quote Icon -->
+          <div class="absolute top-6 right-6 text-primary-200">
+            <Quote size={24} />
+          </div>
+          
+          <!-- Rating Stars -->
+          {testimonial.metadata.rating && (
+            <div class="flex gap-1 mb-4">
+              {renderStars(testimonial.metadata.rating.key).map((filled, index) => (
+                <Star 
+                  size={16} 
+                  class={filled ? "text-yellow-400 fill-current" : "text-gray-300"} 
+                />
+              ))}
+            </div>
+          )}
+          
+          <!-- Testimonial Text -->
+          <blockquote class="text-gray-700 mb-6 leading-relaxed">
+            "{testimonial.metadata.testimonial_text}"
+          </blockquote>
+          
+          <!-- Client Info -->
+          <div class="flex items-center gap-4">
+            <!-- Client Photo -->
+            {testimonial.metadata.client_photo ? (
+              <img 
+                src={`${testimonial.metadata.client_photo.imgix_url}?w=80&h=80&fit=crop&auto=format,compress`}
+                alt={testimonial.metadata.client_name}
+                width="40"
+                height="40"
+                class="w-10 h-10 rounded-full object-cover"
+              />
+            ) : (
+              <div class="w-10 h-10 bg-primary-100 rounded-full flex items-center justify-center">
+                <span class="text-primary-600 font-semibold text-sm">
+                  {testimonial.metadata.client_name?.charAt(0)}
+                </span>
+              </div>
+            )}
+            
+            <!-- Client Details -->
+            <div>
+              <h4 class="font-semibold text-gray-900">
+                {testimonial.metadata.client_name}
+              </h4>
+              <p class="text-sm text-gray-600">
+                {testimonial.metadata.job_title && testimonial.metadata.company 
+                  ? `${testimonial.metadata.job_title}, ${testimonial.metadata.company}`
+                  : testimonial.metadata.company || testimonial.metadata.job_title
+                }
+              </p>
+              {testimonial.metadata.project_type && (
+                <p class="text-xs text-primary-600 mt-1">
+                  {testimonial.metadata.project_type}
+                </p>
+              )}
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

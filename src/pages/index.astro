@@ -1,0 +1,31 @@
+---
+// src/pages/index.astro
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Hero from '../components/Hero.astro';
+import ServicesSection from '../components/ServicesSection.astro';
+import TeamSection from '../components/TeamSection.astro';
+import CaseStudiesSection from '../components/CaseStudiesSection.astro';
+import TestimonialsSection from '../components/TestimonialsSection.astro';
+import ContactSection from '../components/ContactSection.astro';
+import Footer from '../components/Footer.astro';
+import CosmicBadge from '../components/CosmicBadge.astro';
+---
+
+<Layout 
+  title="Smart Pixel - Professional Digital Services"
+  description="Transform your digital presence with our expert design, development, and marketing services. We help businesses grow through exceptional digital solutions."
+  image="https://imgix.cosmicjs.com/dee1b530-8294-11f0-83d8-7b0502815c4d-photo-1551288049-bebda4e38f71-1756223634881.jpg?w=1200&h=630&fit=crop&auto=format,compress"
+>
+  <Header />
+  <main>
+    <Hero />
+    <ServicesSection />
+    <TeamSection />
+    <CaseStudiesSection />
+    <TestimonialsSection />
+    <ContactSection />
+  </main>
+  <Footer />
+  <CosmicBadge />
+</Layout>

@@ -1,0 +1,106 @@
+---
+// src/components/TeamSection.astro
+import { cosmic } from '../lib/cosmic';
+import type { TeamMember } from '../types';
+import { Linkedin, Mail } from 'lucide-astro';
+
+let teamMembers: TeamMember[] = [];
+
+try {
+  const response = await cosmic.objects
+    .find({ type: 'team-members' })
+    .props(['id', 'title', 'slug', 'metadata'])
+    .depth(1);
+  teamMembers = response.objects as TeamMember[];
+} catch (error) {
+  console.error('Error fetching team members:', error);
+}
+---
+
+<section id="team" class="py-20 bg-gray-50">
+  <div class="container mx-auto px-6">
+    <!-- Section Header -->
+    <div class="text-center mb-16">
+      <h2 class="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
+        Meet Our Team
+      </h2>
+      <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+        Our talented professionals bring years of experience and expertise to every project.
+      </p>
+    </div>
+    
+    <!-- Team Grid -->
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {teamMembers.map((member) => (
+        <div class="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden group">
+          <!-- Profile Photo -->
+          {member.metadata.profile_photo ? (
+            <div class="h-64 overflow-hidden">
+              <img 
+                src={`${member.metadata.profile_photo.imgix_url}?w=400&h=300&fit=crop&auto=format,compress`}
+                alt={member.metadata.full_name || member.title}
+                width="400"
+                height="300"
+                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+              />
+            </div>
+          ) : (
+            <div class="h-64 bg-gradient-to-br from-primary-100 to-primary-200 flex items-center justify-center">
+              <div class="w-20 h-20 bg-primary-300 rounded-full flex items-center justify-center">
+                <span class="text-2xl font-bold text-primary-700">
+                  {(member.metadata.full_name || member.title).charAt(0)}
+                </span>
+              </div>
+            </div>
+          )}
+          
+          <div class="p-6">
+            <!-- Name and Title -->
+            <h3 class="text-xl font-bold text-gray-900 mb-1">
+              {member.metadata.full_name || member.title}
+            </h3>
+            <p class="text-primary-600 font-medium mb-3">
+              {member.metadata.job_title}
+            </p>
+            
+            <!-- Experience -->
+            {member.metadata.years_experience && (
+              <p class="text-sm text-gray-500 mb-3">
+                {member.metadata.years_experience} years of experience
+              </p>
+            )}
+            
+            <!-- Bio -->
+            {member.metadata.bio && (
+              <p class="text-gray-600 text-sm mb-4 line-clamp-3">
+                {member.metadata.bio}
+              </p>
+            )}
+            
+            <!-- Social Links -->
+            <div class="flex gap-3">
+              {member.metadata.email && (
+                <a 
+                  href={`mailto:${member.metadata.email}`}
+                  class="w-8 h-8 bg-gray-100 hover:bg-primary-100 rounded-lg flex items-center justify-center text-gray-600 hover:text-primary-600 transition-colors"
+                >
+                  <Mail size={16} />
+                </a>
+              )}
+              {member.metadata.linkedin_url && (
+                <a 
+                  href={member.metadata.linkedin_url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="w-8 h-8 bg-gray-100 hover:bg-primary-100 rounded-lg flex items-center justify-center text-gray-600 hover:text-primary-600 transition-colors"
+                >
+                  <Linkedin size={16} />
+                </a>
+              )}
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
